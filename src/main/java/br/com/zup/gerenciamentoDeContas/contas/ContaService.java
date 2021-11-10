@@ -5,6 +5,8 @@ import br.com.zup.gerenciamentoDeContas.contas.enums.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ContaService {
 
@@ -19,4 +21,9 @@ public class ContaService {
         }
         repository.save(conta);
     }
+
+    public List<Conta> exibirTodasContas (){
+        return (List<Conta>) repository.findAll();
+    }
+
 }
