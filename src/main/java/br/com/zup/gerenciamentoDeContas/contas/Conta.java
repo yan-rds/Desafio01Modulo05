@@ -2,7 +2,6 @@ package br.com.zup.gerenciamentoDeContas.contas;
 
 import br.com.zup.gerenciamentoDeContas.contas.enums.Status;
 import br.com.zup.gerenciamentoDeContas.contas.enums.Tipo;
-import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -19,9 +18,11 @@ public class Conta {
     @Column(nullable = false)
     double valor;
     @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
     Tipo tipo;
     LocalDate dataDeVencimento;
     LocalDateTime dataDePagamento;
+    @Enumerated(EnumType.STRING)
     Status status;
 
     public Conta() {
