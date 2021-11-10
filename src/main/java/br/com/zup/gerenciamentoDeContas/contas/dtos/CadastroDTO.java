@@ -1,30 +1,19 @@
 package br.com.zup.gerenciamentoDeContas.contas.dtos;
 
-import br.com.zup.gerenciamentoDeContas.contas.enums.Status;
-import br.com.zup.gerenciamentoDeContas.contas.enums.Tipo;
 
+import br.com.zup.gerenciamentoDeContas.contas.enums.Tipo;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 public class CadastroDTO {
-    int id;
     String nome;
     double valor;
     Tipo tipo;
     LocalDate dataDeVencimento;
-    LocalDateTime dataDePagamento;
-    Status status;
 
     public CadastroDTO() {
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getNome() {
         return nome;
@@ -58,19 +47,4 @@ public class CadastroDTO {
         this.dataDeVencimento = dataDeVencimento;
     }
 
-    public LocalDateTime getDataDePagamento() {
-        return dataDePagamento;
-    }
-
-    public void setDataDePagamento(LocalDateTime dataDePagamento) {
-        this.dataDePagamento = dataDePagamento;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
 }
