@@ -1,5 +1,7 @@
 package br.com.zup.gerenciamentoDeContas.contas;
 
+import br.com.zup.gerenciamentoDeContas.contas.enums.Status;
+import br.com.zup.gerenciamentoDeContas.contas.enums.Tipo;
 import net.bytebuddy.dynamic.loading.InjectionClassLoader;
 
 import javax.persistence.*;
