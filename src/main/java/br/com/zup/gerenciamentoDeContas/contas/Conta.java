@@ -20,7 +20,6 @@ public class Conta {
     double valor;
     @Column(nullable = false)
     Tipo tipo;
-    @Column(nullable = false)
     LocalDate dataDeVencimento;
     LocalDateTime dataDePagamento;
     Status status;
