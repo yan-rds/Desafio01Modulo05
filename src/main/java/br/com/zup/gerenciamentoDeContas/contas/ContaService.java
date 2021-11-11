@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,6 +51,21 @@ public class ContaService {
             }
 
         throw new ContaNaoEncontrada("Conta não localizada");
+    }
+
+    public List<Conta> identificarFiltroCorreto (Optional<Status> status, Optional<Tipo> tipo){
+        List<Conta> listaFiltrada = new ArrayList<>();
+        if (status.isPresent()){
+            for (Conta conta : filtrarPorStatus(status.get())){
+                listaFiltrada.add(conta);
+            }
+        }
+        else if (tipo.isPresent()){
+            for (Conta conta : filtrarPorTipo(tipo.get())){
+                listaFiltrada.add(conta);
+            }
+        }
+        return listaFiltrada;
     }
 
     public List<Conta> filtrarPorStatus (Status status){
