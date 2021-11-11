@@ -38,6 +38,11 @@ public class ContaController {
         }
         return todosOsCadastros;
     }
+    @GetMapping("/{id}")
+    public RespostaAtualizacaoDTO exibirContaEspecifica (@PathVariable int id){
+        Conta contaLocalizada = contaService.localizarConta(id);
+        return conversor.map(contaLocalizada, RespostaAtualizacaoDTO.class);
+    }
 
     @PutMapping("/{id}")
     public RespostaAtualizacaoDTO atualizarPagamento (@PathVariable int id, @RequestBody StatusPagamentoDTO status){
