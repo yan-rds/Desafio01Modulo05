@@ -4,17 +4,18 @@ package br.com.zup.gerenciamentoDeContas.contas.dtos;
 import br.com.zup.gerenciamentoDeContas.contas.enums.Tipo;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 
 public class CadastroDTO {
     @NotBlank
     String nome;
-    @NotBlank
+    @NotNull
     double valor;
-    @NotBlank
+    @NotNull
     Tipo tipo;
-    @NotBlank
+    @NotNull
     LocalDate dataDeVencimento;
 
     public CadastroDTO() {
