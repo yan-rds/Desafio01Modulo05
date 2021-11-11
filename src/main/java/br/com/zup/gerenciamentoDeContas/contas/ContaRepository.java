@@ -1,6 +1,5 @@
-package br.com.zup.gerenciamentoDeContas.contas.enums;
+package br.com.zup.gerenciamentoDeContas.contas;
 
-import br.com.zup.gerenciamentoDeContas.contas.Conta;
 import org.springframework.data.repository.CrudRepository;
 
 public interface ContaRepository extends CrudRepository<Conta, Integer> {
