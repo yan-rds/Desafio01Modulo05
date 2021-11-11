@@ -1,6 +1,7 @@
 package br.com.zup.gerenciamentoDeContas.contas.tratamentos;
 
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.ContaJaPaga;
+import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.ContaNaoEncontrada;
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.StatusInvalido;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +20,12 @@ public class ControllerAdvice {
     @ExceptionHandler(StatusInvalido.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public MensagemDeErro StatusInvalidoException(StatusInvalido exception) {
+        return new MensagemDeErro(exception.getMessage());
+    }
+
+    @ExceptionHandler(ContaNaoEncontrada.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public MensagemDeErro contaNaoEncontradaException(ContaNaoEncontrada exception){
         return new MensagemDeErro(exception.getMessage());
     }
 }
