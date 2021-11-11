@@ -1,6 +1,7 @@
 package br.com.zup.gerenciamentoDeContas.contas;
 
 import br.com.zup.gerenciamentoDeContas.contas.enums.Status;
+import br.com.zup.gerenciamentoDeContas.contas.enums.Tipo;
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.ContaNaoEncontrada;
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.NaoHaContas;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,9 @@ public class ContaService {
         return (List<Conta>) repository.findAllByStatus(status);
     }
 
+    public List<Conta> filtrarPorTipo (Tipo tipo){
+        return (List<Conta>) repository.findAllByTipo(tipo);
+    }
 
 
 }
