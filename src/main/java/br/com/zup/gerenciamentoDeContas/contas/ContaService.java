@@ -56,14 +56,10 @@ public class ContaService {
     public List<Conta> identificarFiltroCorreto (Optional<Status> status, Optional<Tipo> tipo){
         List<Conta> listaFiltrada = new ArrayList<>();
         if (status.isPresent()){
-            for (Conta conta : filtrarPorStatus(status.get())){
-                listaFiltrada.add(conta);
-            }
+            listaFiltrada.addAll(filtrarPorStatus(status.get()));
         }
         else if (tipo.isPresent()){
-            for (Conta conta : filtrarPorTipo(tipo.get())){
-                listaFiltrada.add(conta);
-            }
+            listaFiltrada.addAll(filtrarPorTipo(tipo.get()));
         }
         return listaFiltrada;
     }
@@ -74,6 +70,10 @@ public class ContaService {
 
     public List<Conta> filtrarPorTipo (Tipo tipo){
         return (List<Conta>) repository.findAllByTipo(tipo);
+    }
+
+    public void deletarConta (int id){
+        repository.deleteById(id);
     }
 
 
