@@ -51,6 +51,10 @@ public class ContaService {
         throw new ContaNaoEncontrada("Conta não localizada");
     }
 
+    public List<Conta> filtrarPorStatus (Status status){
+        return (List<Conta>) repository.findAllByStatus(status);
+    }
+
 
 
 }
