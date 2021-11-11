@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,7 +22,7 @@ public class ContaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public RespostaCadastroDTO cadastrarConta (@RequestBody CadastroDTO cadastroDTO){
+    public RespostaCadastroDTO cadastrarConta (@RequestBody @Valid CadastroDTO cadastroDTO){
         Conta conta = conversor.map(cadastroDTO, Conta.class);
         contaService.cadastrarConta(conta);
         RespostaCadastroDTO respostaCadastroDTO = conversor.map(conta, RespostaCadastroDTO.class);
