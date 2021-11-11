@@ -1,13 +1,12 @@
 package br.com.zup.gerenciamentoDeContas.contas;
 
-import br.com.zup.gerenciamentoDeContas.contas.dtos.CadastroDTO;
-import br.com.zup.gerenciamentoDeContas.contas.dtos.GetCadastroDTO;
-import br.com.zup.gerenciamentoDeContas.contas.dtos.RespostaCadastroDTO;
+import br.com.zup.gerenciamentoDeContas.contas.dtos.*;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,6 +36,16 @@ public class ContaController {
             todosOsCadastros.add(getCadastroDTO);
         }
         return todosOsCadastros;
+    }
+
+    @PutMapping("/{id}")
+    public RespostaAtualizacaoDTO atualizarPagamento (@PathVariable int id, @RequestBody StatusPagamentoDTO status){
+        Conta contaAtualizada = contaService.atualizarPagamento(id, status.getStatus());
+        RespostaAtualizacaoDTO respostaAtualizacaoDTO = conversor.map(contaAtualizada, RespostaAtualizacaoDTO.class);
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        String formatDateTime = contaAtualizada.dataDePagamento.format(format);
+        respostaAtualizacaoDTO.setDataDePagamento(formatDateTime);
+        return respostaAtualizacaoDTO;
     }
 
 }
