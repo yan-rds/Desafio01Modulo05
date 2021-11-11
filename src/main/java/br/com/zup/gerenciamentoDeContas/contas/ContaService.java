@@ -1,6 +1,8 @@
 package br.com.zup.gerenciamentoDeContas.contas;
 
 import br.com.zup.gerenciamentoDeContas.contas.enums.Status;
+import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.ContaNaoEncontrada;
+import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.NaoHaContas;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,10 @@ public class ContaService {
     }
 
     public List<Conta> exibirTodasContas (){
+        List<Conta> lista = (List<Conta>) repository.findAll();
+        if (lista.isEmpty()){
+            throw new NaoHaContas("Não há contas cadastradas");
+        }
         return (List<Conta>) repository.findAll();
     }
 
@@ -42,7 +48,7 @@ public class ContaService {
                 return contaLocaizadarepository.get();
             }
 
-        throw new RuntimeException("Não encontrado");
+        throw new ContaNaoEncontrada("Conta não localizada");
     }
 
 

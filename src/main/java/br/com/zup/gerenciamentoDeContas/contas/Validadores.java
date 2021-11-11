@@ -1,6 +1,8 @@
 package br.com.zup.gerenciamentoDeContas.contas;
 
 import br.com.zup.gerenciamentoDeContas.contas.enums.Status;
+import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.ContaJaPaga;
+import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.StatusInvalido;
 
 import java.time.LocalDate;
 
@@ -15,10 +17,10 @@ public class Validadores {
 
     public static void statusValido (Conta conta, Status status){
         if (!status.equals(Status.PAGO)){
-            throw new RuntimeException();
+            throw new StatusInvalido("Status inserido inválido");
         }
         else if (conta.status.equals(Status.PAGO)){
-            throw new RuntimeException();
+            throw new ContaJaPaga("Está conta já foi paga");
         }
 
     }
