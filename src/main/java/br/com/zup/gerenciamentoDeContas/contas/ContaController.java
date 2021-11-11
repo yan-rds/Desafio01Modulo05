@@ -1,6 +1,8 @@
 package br.com.zup.gerenciamentoDeContas.contas;
 
 import br.com.zup.gerenciamentoDeContas.contas.dtos.*;
+import br.com.zup.gerenciamentoDeContas.contas.enums.Status;
+import br.com.zup.gerenciamentoDeContas.contas.enums.Tipo;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +12,7 @@ import javax.validation.Valid;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/contas")
@@ -30,13 +33,20 @@ public class ContaController {
     }
 
     @GetMapping
-    public List exibirCadastros (){
-        List <GetCadastroDTO> todosOsCadastros = new ArrayList<>();
-        for (Conta conta : contaService.exibirTodasContas()){
-            GetCadastroDTO getCadastroDTO = conversor.map(conta, GetCadastroDTO.class);
-            todosOsCadastros.add(getCadastroDTO);
+    public List exibirCadastros (@RequestParam Optional<Status> status, @RequestParam Optional<Tipo> tipo){
+        List <GetCadastroDTO> listaExibida = new ArrayList<>();
+        if (status.isPresent() | tipo.isPresent()){
+            for (Conta conta : contaService.identificarFiltroCorreto(status, tipo)){
+                GetCadastroDTO getCadastroDTO = conversor.map(conta, GetCadastroDTO.class);
+                listaExibida.add(getCadastroDTO);
+            }
+        } else {
+            for (Conta conta : contaService.exibirTodasContas()) {
+                GetCadastroDTO getCadastroDTO = conversor.map(conta, GetCadastroDTO.class);
+                listaExibida.add(getCadastroDTO);
+            }
         }
-        return todosOsCadastros;
+        return listaExibida;
     }
     @GetMapping("/{id}")
     public RespostaAtualizacaoDTO exibirContaEspecifica (@PathVariable int id){
