@@ -4,10 +4,17 @@ import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.ContaJaPag
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.ContaNaoEncontrada;
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.NaoHaContas;
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.StatusInvalido;
+import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RestControllerAdvice
 public class ControllerAdvice {
@@ -35,4 +42,19 @@ public class ControllerAdvice {
     public MensagemDeErro contaNaoEncontradaException(NaoHaContas exception){
         return new MensagemDeErro(exception.getMessage());
     }
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    public List<MensagemDeErro> manipularErrosDeValidacao(MethodArgumentNotValidException exception){
+        List<MensagemDeErro> mensagensDeErro = new ArrayList<>();
+
+        for (FieldError fieldError : exception.getFieldErrors()){
+            MensagemDeErro mensagemDeErro = new MensagemDeErro(fieldError.getDefaultMessage());
+            mensagensDeErro.add(mensagemDeErro);
+        }
+
+        return mensagensDeErro;
+    }
+
+
 }
