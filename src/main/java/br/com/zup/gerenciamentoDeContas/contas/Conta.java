@@ -13,11 +13,8 @@ public class Conta {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
-    @Column(nullable = false)
     String nome;
-    @Column(nullable = false)
     double valor;
-    @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     Tipo tipo;
     LocalDate dataDeVencimento;
