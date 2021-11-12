@@ -8,14 +8,14 @@ import java.time.LocalDate;
 
 public class Validadores {
 
-    public static boolean pagamentoVencido(LocalDate dataDeVencimento){
+    public static boolean validarDataDePagamento(LocalDate dataDeVencimento){
         if (dataDeVencimento.isBefore(LocalDate.now())){
             return true;
         }
         return false;
     }
 
-    public static void statusValido (Conta conta, Status status){
+    public static void validarStatus(Conta conta, Status status){
         if (!status.equals(Status.PAGO)){
             throw new StatusInvalido("Status inserido inválido");
         }

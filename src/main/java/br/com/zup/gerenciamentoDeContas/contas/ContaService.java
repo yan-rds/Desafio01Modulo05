@@ -19,7 +19,7 @@ public class ContaService {
     private ContaRepository repository;
 
     public void cadastrarConta (Conta conta){
-        if (Validadores.pagamentoVencido(conta.dataDeVencimento)){
+        if (Validadores.validarDataDePagamento(conta.dataDeVencimento)){
             conta.setStatus(Status.VENCIDA);
         } else{
             conta.setStatus(Status.AGUARDANDO);
@@ -37,7 +37,7 @@ public class ContaService {
 
     public Conta atualizarPagamento (int id, Status status){
         Conta contaAAtualizar = localizarConta(id);
-        Validadores.statusValido(contaAAtualizar, status);
+        Validadores.validarStatus(contaAAtualizar, status);
         contaAAtualizar.setStatus(status);
         contaAAtualizar.setDataDePagamento(LocalDateTime.now());
         repository.save(contaAAtualizar);
