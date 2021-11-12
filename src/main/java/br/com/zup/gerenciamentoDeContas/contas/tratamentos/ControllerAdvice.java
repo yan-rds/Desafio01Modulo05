@@ -6,6 +6,7 @@ import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.NaoHaConta
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.StatusInvalido;
 import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -54,6 +55,12 @@ public class ControllerAdvice {
         }
 
         return mensagensDeErro;
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public MensagemDeErro naoLegivelException (){
+        return new MensagemDeErro("Informação do JSON ilegível");
     }
 
 
