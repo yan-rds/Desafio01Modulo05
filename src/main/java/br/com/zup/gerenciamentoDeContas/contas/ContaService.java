@@ -46,22 +46,22 @@ public class ContaService {
 
     public Conta localizarConta (int id){
         Optional <Conta> contaLocaizadarepository = repository.findById(id);
-            if (contaLocaizadarepository.isPresent()){
-                return contaLocaizadarepository.get();
-            }
-
+        if (contaLocaizadarepository.isPresent()){
+            return contaLocaizadarepository.get();
+        }
         throw new ContaNaoEncontrada("Conta não localizada");
     }
 
-    public List<Conta> identificarFiltroCorreto (Optional<Double> valor, Optional<Status> status, Optional<Tipo> tipo){
+
+    public List<Conta> identificarFiltroCorreto (Optional<Double> valor,
+                                                 Optional<Status> status,
+                                                 Optional<Tipo> tipo){
         List<Conta> listaFiltrada = new ArrayList<>();
-        if (status.isPresent()){
-            listaFiltrada.addAll(filtrarPorStatus(status.get()));
-        }
-        else if (tipo.isPresent()){
-            listaFiltrada.addAll(filtrarPorTipo(tipo.get()));
-        }
-        else valor.ifPresent(valorAproximado -> listaFiltrada.addAll(filtrarPorValorAproximado(valorAproximado)));
+
+
+        status.ifPresent(statusParametro -> listaFiltrada.addAll(filtrarPorStatus(statusParametro)));
+        tipo.ifPresent(tipoParametro -> listaFiltrada.addAll(filtrarPorTipo(tipoParametro)));
+        valor.ifPresent(valorAproximado -> listaFiltrada.addAll(filtrarPorValorAproximado(valorAproximado)));
         return listaFiltrada;
     }
 
