@@ -33,10 +33,10 @@ public class ContaController {
     }
 
     @GetMapping
-    public List exibirCadastros (@RequestParam Optional<Status> status, @RequestParam Optional<Tipo> tipo){
+    public List exibirCadastros (@RequestParam Optional<Double> valor, @RequestParam Optional<Status> status, @RequestParam Optional<Tipo> tipo){
         List <GetCadastroDTO> listaExibida = new ArrayList<>();
-        if (status.isPresent() | tipo.isPresent()){
-            for (Conta conta : contaService.identificarFiltroCorreto(status, tipo)){
+        if (status.isPresent() | tipo.isPresent() | valor.isPresent()){
+            for (Conta conta : contaService.identificarFiltroCorreto(valor, status, tipo)){
                 GetCadastroDTO getCadastroDTO = conversor.map(conta, GetCadastroDTO.class);
                 listaExibida.add(getCadastroDTO);
             }
