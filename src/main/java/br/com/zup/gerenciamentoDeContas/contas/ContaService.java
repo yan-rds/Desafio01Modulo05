@@ -18,34 +18,34 @@ public class ContaService {
     @Autowired
     private ContaRepository repository;
 
-    public void cadastrarConta (Conta conta){
-        if (Validadores.pagamentoVencido(conta.dataDeVencimento)){
-            conta.setStatus(Status.VENCIDA);
+    public void cadastrarConta (Contas contas){
+        if (Validadores.pagamentoVencido(contas.dataDeVencimento)){
+            contas.setStatus(Status.VENCIDA);
         } else{
-            conta.setStatus(Status.AGUARDANDO);
+            contas.setStatus(Status.AGUARDANDO);
         }
-        repository.save(conta);
+        repository.save(contas);
     }
 
-    public List<Conta> exibirTodasContas (){
-        List<Conta> lista = (List<Conta>) repository.findAll();
+    public List<Contas> exibirTodasContas (){
+        List<Contas> lista = (List<Contas>) repository.findAll();
         if (lista.isEmpty()){
             throw new NaoHaContas("Não há contas cadastradas");
         }
-        return (List<Conta>) repository.findAll();
+        return (List<Contas>) repository.findAll();
     }
 
-    public Conta atualizarPagamento (int id, Status status){
-        Conta contaAAtualizar = localizarConta(id);
-        Validadores.statusValido(contaAAtualizar, status);
-        contaAAtualizar.setStatus(status);
-        contaAAtualizar.setDataDePagamento(LocalDateTime.now());
-        repository.save(contaAAtualizar);
-        return contaAAtualizar;
+    public Contas atualizarPagamento (int id, Status status){
+        Contas contasAAtualizar = localizarConta(id);
+        Validadores.statusValido(contasAAtualizar, status);
+        contasAAtualizar.setStatus(status);
+        contasAAtualizar.setDataDePagamento(LocalDateTime.now());
+        repository.save(contasAAtualizar);
+        return contasAAtualizar;
     }
 
-    public Conta localizarConta (int id){
-        Optional <Conta> contaLocaizadarepository = repository.findById(id);
+    public Contas localizarConta (int id){
+        Optional <Contas> contaLocaizadarepository = repository.findById(id);
             if (contaLocaizadarepository.isPresent()){
                 return contaLocaizadarepository.get();
             }
@@ -53,23 +53,31 @@ public class ContaService {
         throw new ContaNaoEncontrada("Conta não localizada");
     }
 
-    public List<Conta> identificarFiltroCorreto (Optional<Status> status, Optional<Tipo> tipo){
-        List<Conta> listaFiltrada = new ArrayList<>();
+    public List<Contas> identificarFiltroCorreto (Optional<Double> valor, Optional<Status> status, Optional<Tipo> tipo){
+        List<Contas> listaFiltrada = new ArrayList<>();
         if (status.isPresent()){
             listaFiltrada.addAll(filtrarPorStatus(status.get()));
         }
         else if (tipo.isPresent()){
             listaFiltrada.addAll(filtrarPorTipo(tipo.get()));
         }
+        else valor.ifPresent(valorAproximado -> listaFiltrada.addAll(filtrarPorValorAproximado(valorAproximado)));
         return listaFiltrada;
     }
 
-    public List<Conta> filtrarPorStatus (Status status){
-        return (List<Conta>) repository.findAllByStatus(status);
+    public List<Contas> filtrarPorStatus (Status status){
+        return (List<Contas>) repository.findAllByStatus(status);
     }
 
-    public List<Conta> filtrarPorTipo (Tipo tipo){
-        return (List<Conta>) repository.findAllByTipo(tipo);
+
+
+    public List<Contas> filtrarPorTipo (Tipo tipo){
+        return (List<Contas>) repository.findAllByTipo(tipo);
+    }
+
+    public List<Contas> filtrarPorValorAproximado (double valor){
+        List<Contas> valorAproximado = (List<Contas>) repository.findAllAproximatedContas(valor);
+        return valorAproximado;
     }
 
     public void deletarConta (int id){
