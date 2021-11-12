@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
-public class RespostaCadastroDTO {
+public class RespostaContaDTO {
     int id;
     String nome;
     double valor;
@@ -17,7 +17,7 @@ public class RespostaCadastroDTO {
     LocalDateTime dataDePagamento;
     Status status;
 
-    public RespostaCadastroDTO() {
+    public RespostaContaDTO() {
     }
 
     public int getId() {

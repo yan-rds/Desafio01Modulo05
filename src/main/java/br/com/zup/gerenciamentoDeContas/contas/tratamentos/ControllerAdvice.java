@@ -20,7 +20,7 @@ import java.util.List;
 public class ControllerAdvice {
 
     @ExceptionHandler(ContaJaPaga.class)
-    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ResponseStatus(HttpStatus.CONFLICT)
     public MensagemDeErro contaJaPagaException(ContaJaPaga exception){
         return new MensagemDeErro(exception.getMessage());
     }

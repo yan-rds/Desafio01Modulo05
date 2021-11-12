@@ -2,13 +2,13 @@ package br.com.zup.gerenciamentoDeContas.contas.dtos;
 
 import br.com.zup.gerenciamentoDeContas.contas.enums.Status;
 
-public class GetCadastroDTO {
+public class ContaListadaDTO {
     private int id;
     private String nome;
     private double valor;
     private Status status;
 
-    public GetCadastroDTO() {
+    public ContaListadaDTO() {
     }
 
     public int getId() {

@@ -25,25 +25,25 @@ public class ContaController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public RespostaCadastroDTO cadastrarConta (@RequestBody @Valid CadastroDTO cadastroDTO){
-        Conta conta = conversor.map(cadastroDTO, Conta.class);
+    public RespostaContaDTO cadastrarConta (@RequestBody @Valid ContaDTO contaDTO){
+        Conta conta = conversor.map(contaDTO, Conta.class);
         contaService.cadastrarConta(conta);
-        RespostaCadastroDTO respostaCadastroDTO = conversor.map(conta, RespostaCadastroDTO.class);
-        return respostaCadastroDTO;
+        RespostaContaDTO respostaContaDTO = conversor.map(conta, RespostaContaDTO.class);
+        return respostaContaDTO;
     }
 
     @GetMapping
     public List exibirCadastros (@RequestParam Optional<Double> valor, @RequestParam Optional<Status> status, @RequestParam Optional<Tipo> tipo){
-        List <GetCadastroDTO> listaExibida = new ArrayList<>();
+        List <ContaListadaDTO> listaExibida = new ArrayList<>();
         if (status.isPresent() | tipo.isPresent() | valor.isPresent()){
             for (Conta conta : contaService.identificarFiltroCorreto(valor, status, tipo)){
-                GetCadastroDTO getCadastroDTO = conversor.map(conta, GetCadastroDTO.class);
-                listaExibida.add(getCadastroDTO);
+                ContaListadaDTO contaListadaDTO = conversor.map(conta, ContaListadaDTO.class);
+                listaExibida.add(contaListadaDTO);
             }
         } else {
             for (Conta conta : contaService.exibirTodasContas()) {
-                GetCadastroDTO getCadastroDTO = conversor.map(conta, GetCadastroDTO.class);
-                listaExibida.add(getCadastroDTO);
+                ContaListadaDTO contaListadaDTO = conversor.map(conta, ContaListadaDTO.class);
+                listaExibida.add(contaListadaDTO);
             }
         }
         return listaExibida;
