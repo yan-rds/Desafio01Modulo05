@@ -20,11 +20,7 @@ public class Validadores {
             throw new StatusInvalido("Status inserido inválido");
         }
         else if (conta.status.equals(Status.PAGO)){
-            throw new ContaJaPaga("Está conta já foi paga");
+            throw new ContaJaPaga("Esta conta já foi paga");
         }
-
     }
-
-
-
 }

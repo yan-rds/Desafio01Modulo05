@@ -9,7 +9,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,14 +32,19 @@ public class ContaController {
     }
 
     @GetMapping
-    public List exibirCadastros (@RequestParam Optional<Double> valor, @RequestParam Optional<Status> status, @RequestParam Optional<Tipo> tipo){
+    public List exibirCadastros (@RequestParam Optional<Double> valor,
+                                 @RequestParam Optional<Status> status,
+                                 @RequestParam Optional<Tipo> tipo){
         List <ContaListadaDTO> listaExibida = new ArrayList<>();
+        /* Este If verifica se qualquer um dos @RequestParam foi preenchido, caso sim, ele chama o método
+           que verifica qual deles foi inserido, os transforma em DTO e os adiciona à lista.*/
         if (status.isPresent() | tipo.isPresent() | valor.isPresent()){
             for (Conta conta : contaService.identificarFiltroCorreto(valor, status, tipo)){
                 ContaListadaDTO contaListadaDTO = conversor.map(conta, ContaListadaDTO.class);
                 listaExibida.add(contaListadaDTO);
             }
-        } else {
+        } else {/* Caso não haja parâmetros, ele executa o método que lista todas as contas, os converte e
+                   adiciona a nova lista*/
             for (Conta conta : contaService.exibirTodasContas()) {
                 ContaListadaDTO contaListadaDTO = conversor.map(conta, ContaListadaDTO.class);
                 listaExibida.add(contaListadaDTO);

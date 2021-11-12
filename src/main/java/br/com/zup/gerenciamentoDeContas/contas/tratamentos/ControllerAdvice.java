@@ -4,7 +4,6 @@ import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.ContaJaPag
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.ContaNaoEncontrada;
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.NaoHaContas;
 import br.com.zup.gerenciamentoDeContas.contas.tratamentos.exceptions.StatusInvalido;
-import org.springframework.beans.NotReadablePropertyException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +42,9 @@ public class ControllerAdvice {
         return new MensagemDeErro(exception.getMessage());
     }
 
+    /* Este método específico lida com todas as mensagens de erro de validação da dependencia Validation,
+       caso mais de um erro de validação aconteça na mesma requisição, ele armazena todos numa lista e a
+       retorna */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
     public List<MensagemDeErro> manipularErrosDeValidacao(MethodArgumentNotValidException exception){

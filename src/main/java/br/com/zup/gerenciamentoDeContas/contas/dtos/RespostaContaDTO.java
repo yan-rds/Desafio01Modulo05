@@ -13,6 +13,7 @@ public class RespostaContaDTO {
     double valor;
     Tipo tipo;
     LocalDate dataDeVencimento;
+    // Esta anotação formata a data apresentada no Json da resposta
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     LocalDateTime dataDePagamento;
     Status status;

@@ -52,13 +52,14 @@ public class ContaService {
         throw new ContaNaoEncontrada("Conta não localizada");
     }
 
-
+         /* Este método é chamado caso um @RequestParam seja inserido na Controller, sua função é identificar
+            o parâmetro correto e retornar uma lista filtrada por este parâmetro*/
     public List<Conta> identificarFiltroCorreto (Optional<Double> valor,
                                                  Optional<Status> status,
                                                  Optional<Tipo> tipo){
         List<Conta> listaFiltrada = new ArrayList<>();
-
-
+        /* A Lambda substitui o if convencional por ifPresente, sua função é a partir de um parâmetro
+           adicionar à listaFiltrada todos os itens do método filtrarPor equivalente.*/
         status.ifPresent(statusParametro -> listaFiltrada.addAll(filtrarPorStatus(statusParametro)));
         tipo.ifPresent(tipoParametro -> listaFiltrada.addAll(filtrarPorTipo(tipoParametro)));
         valor.ifPresent(valorAproximado -> listaFiltrada.addAll(filtrarPorValorAproximado(valorAproximado)));
