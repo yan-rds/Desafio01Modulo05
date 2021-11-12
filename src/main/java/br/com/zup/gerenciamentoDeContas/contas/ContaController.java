@@ -49,19 +49,16 @@ public class ContaController {
         return listaExibida;
     }
     @GetMapping("/{id}")
-    public RespostaAtualizacaoDTO exibirContaEspecifica (@PathVariable int id){
+    public RespostaContaDTO exibirContaEspecifica (@PathVariable int id){
         Conta contaLocalizada = contaService.localizarConta(id);
-        return conversor.map(contaLocalizada, RespostaAtualizacaoDTO.class);
+        return conversor.map(contaLocalizada, RespostaContaDTO.class);
     }
 
     @PutMapping("/{id}")
-    public RespostaAtualizacaoDTO atualizarPagamento (@PathVariable int id, @RequestBody StatusPagamentoDTO status){
+    public RespostaContaDTO atualizarPagamento (@PathVariable int id, @RequestBody StatusPagamentoDTO status){
         Conta contaAtualizada = contaService.atualizarPagamento(id, status.getStatus());
-        RespostaAtualizacaoDTO respostaAtualizacaoDTO = conversor.map(contaAtualizada, RespostaAtualizacaoDTO.class);
-        DateTimeFormatter format = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
-        String formatDateTime = contaAtualizada.dataDePagamento.format(format);
-        respostaAtualizacaoDTO.setDataDePagamento(formatDateTime);
-        return respostaAtualizacaoDTO;
+        RespostaContaDTO respostaContaDTO = conversor.map(contaAtualizada, RespostaContaDTO.class);
+        return respostaContaDTO;
     }
 
     @DeleteMapping("/{id}")
