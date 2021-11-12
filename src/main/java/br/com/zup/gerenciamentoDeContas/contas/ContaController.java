@@ -64,4 +64,10 @@ public class ContaController {
         return respostaAtualizacaoDTO;
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deletarConta (@PathVariable int id){
+        contaService.deletarConta(id);
+    }
+
 }
